@@ -27,46 +27,47 @@ VALUES
 
 SELECT * FROM employees;
 -- Payroll Queries
--- a,
+-- a, Retrieve the list of employees sorted by salary in descending order
 SELECT EMPLOYEE_ID, NAME, SALARY FROM employees ORDER BY SALARY desc;
 
--- b,
+-- b, Find employees with a total compensation greater than 6000
 SELECT * FROM employees
 WHERE (SALARY + BONUS) > 60000;
 
--- c,
+-- c, Update the bonus for employees in the Sales department by 10%
 UPDATE employees
 SET BONUS= BONUS *110/100
 WHERE DEPARTMENT = 'Sales';
 SELECT * FROM employees;
 
--- d,
+-- d, Calculate the net salary after deducting tax for all employees
 SELECT EMPLOYEE_ID, NAME, DEPARTMENT,SALARY,
 BONUS,TAX_PERCENTAGE,
 (SALARY + BONUS - (SALARY * TAX_PERCENTAGE / 100)) AS net_salary
 FROM employees;
 
--- e,
+-- e, Retrieve the average, minimum and maximum salary per department
 SELECT DEPARTMENT,AVG(SALARY) as salary, MIN(SALARY) as minimum, MAX(SALARY) as maximum
 FROM employees GROUP BY DEPARTMENT;
 
 -- Advanced Queries
--- a, 
+-- a, Retrieve employees who joined in the last 6 months
 SELECT * FROM EMPLOYEES 
 WHERE JOINING_DATE > CURRENT_DATE - INTERVAL '6 MONTHS';
 
--- b,
+-- b, Group employees by department and count how many employees each has
 SELECT DEPARTMENT,COUNT(EMPLOYEE_ID) as total_number 
 FROM employees GROUP BY DEPARTMENT;
 
--- c,
+-- c, Find the department with the highest salary
 SELECT DEPARTMENT, AVG(SALARY) as average_salary
 FROM employees GROUP BY DEPARTMENT ORDER BY average_salary desc
 LIMIT 1;
 
--- d
+-- d Identify employees who have the same salary as atleast one other employee
 SELECT e1.*
 FROM employees e1
 JOIN employees e2
   ON e1.SALARY = e2.SALARY
  AND e1.EMPLOYEE_ID <> e2.EMPLOYEE_ID;
+
